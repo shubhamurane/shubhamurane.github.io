@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitmore - Fitness Protein Store</title>
+
+  
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #9d8189; /* Raisin Black background */
+      color: whitesmoke;
+      scroll-behavior: smooth;
+    }
+
+    /* Header */
+    header {
+      background: #2c2a2a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .logo {
+      font-size: 1.8em;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      padding-right: 200px;
+      letter-spacing: 1px;
+    }
+
+    @keyframes logoBounce {
+      0% { transform: scale(1); color: #f0f0f0; }
+      100% { transform: scale(1.1); color: #d9d9d9; }
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #f1f1f1;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #f0f0f0;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8em;
+      cursor: pointer;
+      color: #f0f0f0;
+      transition: transform 0.3s;
+    }
+
+    .menu-toggle.active {
+      transform: rotate(90deg);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #2c2a2a;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 40px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: #f5f5f5;
+      color: #1f1c1c;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #home {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #home h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #1f1c1c;
+    }
+
+    #home p {
+      font-size: 1.2em;
+      max-width: 600px;
+      color: #333;
+    }
+
+    /* Products */
+    #products {
+      background: #f5f5f5;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #1f1c1c;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      margin: 15px 0 10px;
+      color: #1f1c1c;
+    }
+
+    .product-card p {
+      font-size: 0.95em;
+      color: #333;
+      margin: 0 15px 15px;
+    }
+
+    .product-card .price {
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .product-card button {
+      background: #555;
+      color: #fff;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .product-card button:hover {
+      background: #333;
+    }
+
+    
+    #services p, #about p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    input, textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 1em;
+      background: #f0f0f0;
+      color: #1f1c1c;
+    }
+
+    button.submit {
+      background: #555;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button.submit:hover {
+      background: #333;
+    }
+
+        /* Customer Reviews */
+    #reviews {
+      background: #f5f5f5;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .review-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .review-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .review-card h3 {
+      margin-bottom: 10px;
+      color: #1f1c1c;
+    }
+
+    .review-card p {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    .stars {
+      color: gold;
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(180deg, #2c2a2a, #1a1a1a);
+      color: #f1f1f1;
+      padding: 50px 20px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section {
+      margin: 15px;
+      width: 250px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 15px;
+      color: #f0f0f0;
+    }
+
+    .footer-section a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 6px 0;
+      transition: color 0.3s;
+    }
+
+    .footer-section a:hover {
+      color: #f0f0f0;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .social-icons a {
+      color: #fff;
+      font-size: 1.3em;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: #f0f0f0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #444;
+      padding-top: 15px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://github.com/shubhamurane/FITMORE/blob/main/cropped_circle_image%20(1).png?raw=true" width="53" height="53" id="logo">
+    
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <nav id="navMenu">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="home">
+    <h1>WELCOME TO FITMORE</h1>
+    <p>Premium protein supplements crafted for performance, strength, and recovery. Elevate your fitness with Fitmore.</p>
+  </section>
+
+  <section id="services">
+    <h2>Our Services</h2>
+    <p>We offer premium supplements, personal nutrition guidance, and subscription plans designed for serious athletes and fitness enthusiasts.</p>
+  </section>
+
+  <section id="products">
+    <h2>Our Premium Products</h2>
+    <div class="products-grid">
+      <!-- 30 Product Cards -->
+      <!-- Each uses static HTML instead of JS -->
+      <!-- You can replace image links with your own product images -->
+      <!-- Example uses random picsum placeholders -->
+      <!-- Product 1–30 -->
+      <!-- Repeat Pattern -->
+      <!-- Sample shown below -->
+      <!-- -->
+      <!-- I'll show 3, you can duplicate pattern to 30 -->
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro1.jpeg?raw=true" alt="Protein Product 1">
+        <h3>PINTOLA</h3>
+        <p>Dark Chocolate & Cranberry 1 kg + 24g Protein | High Fibre & Real Fruits |Muesli for Breakfast Food & Muselies Fruit Nuts and Seeds .</p>
+        <div class="price">₹560</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro2.jpeg?raw=true" alt="Protein Product 2">
+        <h3>IN2 WHEY</h3>
+        <p>Support muscle growth and recovery | 25 g protein & 5.5 g BCAAs + 4 g glutamine | 1.81 kg & 55 servings | Rich Chocolate flavour.</p>
+        <div class="price">₹4,050</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro3.jpeg?raw=true" alt="Protein Product 3">
+        <h3>WHEY 3x SERIES </h3>  
+        <p>supports muscle building and recovery | 58 servings & 25 g protein | 6.2 g BCAAs + 3.9 g glutamine | Double rich Chocolate.</p>
+        <div class="price">₹3,000</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro4.jpeg?raw=true" alt="Protein Product 3">
+        <h3>YEAH BUDDY</h3>
+        <p>Enhance strength & endurance & muscle pumps | 30 servings + 270 g | Pre-workout energy powder.</p>
+        <div class="price">₹2,800</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro5.jpeg?raw=true" alt="Protein Product 3">
+        <h3>IN2 PRE-WORKOUT</h3>
+        <p> IN2 Pre-Workout protein & Enhance workout performance | 30 servings + 195 g | Orange flavour.</p>
+        <div class="price">₹1,200</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro6.jpeg?raw=true" alt="Protein Product 3">
+        <h3>NIRAFLEX</h3>
+        <p>Hypermia & Testosterone enhancing powder | 30 servings + 309 g | pre-workout protein.</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro7.jpeg?raw=true" alt="Protein Product 3">
+        <h3>NITRO-BLAST</h3>
+        <p>Preworkout Protein & Strength muscle growth recovery endurance | 50 servings & 300 g | Watermelon flavour</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro8.jpeg?raw=true" alt="Protein Product 3">
+        <h3>MUSCLEBLAZE MB</h3>
+        <p>Build Lean muscle gain and support recovery & enhanced absorption formula(EAF) | 55 Servings & 2 kg | Chocolate Hazelnut Flavour </p>
+        <div class="price">₹4,700</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro9.jpeg?raw=true" alt="Protein Product 3">
+        <h3>PURE WHEY </h3>
+        <p>Lean muscle growth & Low in fat and carbs + Fast absorption | 24 g protein & 6.9 BCAAs | 75 servings & 5 lbs | Choco velet flavour. </p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro10.jpeg?raw=true" alt="Protein Product 3">
+        
+        <h3> CLEANEST WHEY</h3>
+        <p>
+           The Whole Truth Whey Protein Isolate+Concentrate | Light Cocoa 2 kg (4.4 lbs) | 24g Protein/Scoop | 6.6g BCAA | Clean, Light & Easy to Digest.
+        </p>
+        <div class="price">₹2,100</div>
+      </div>
+
+       <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro11.jpeg?raw=true" alt="Protein Product 3">
+        <h3>PLANT PROTEIN +</h3>
+        <p>Plant Based Protein Powder with Multivitamin | Minerals | Superfoods | Pea Protein | Digestive Enzymes - Belgian Chocolate Flavour - 1kg.</p>
+        <div class="price">₹1,610</div>
+      </div>
+
+        <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro12.jpeg?raw=true" alt="Protein Product 3">
+        <h3>MUTANT MADNESS</h3>
+        <p>Redefines the Pre-Workout Experience | Engineered Exclusively for High Intensity Workouts, 225g &ndash; Roadside Lemonade</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+
+       <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro13.jpeg?raw=true" alt="Protein Product 3">
+        <h3>GAFFIT NITRO8</h3>
+        <p>Explosive Energy & Laser Focus with 300mg Caffeine Anhydrous | Maximum Muscle Pumps with 3800mg Citrulline Malate (2:1) | Enhanced Nutrient Absorption with 375mg Astragin 
+          | Delays Fatigue & Boosts Stamina with 2200mg Beta-Alanine</p>
+        <div class="price">₹2,199</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro14.jpeg?raw=true" alt="Protein Product 3">
+        <h3>PSYCHOTIC INSANE LABZ</h3>
+        <p>Preworkout protein | Insane labz Psychotic 60 servings Grape flavor  (370 g) | Energy focus endurance psycho | Dietary suppliment.</p>
+        <div class="price">₹3,000</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro15.jpeg?raw=true" alt="Protein Product 3">
+        <h3>OLYMPIA WHEY 3X</h3>
+        <p>protein 25g, total carbohydrate 2g, total sugar 1g, added sugar 2 | 
+Whey Protein 3X Series is a combination of whey protein concentrate and isolate | 
+Net quantity 907 g</p>
+        <div class="price">₹3,779</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro16.jpeg?raw=true" alt="Protein Product 3">
+        <h3>LABRADA WHY </h3>
+        <p>Labrada 100% Whey Protein 4 lbs (1.8 kg) (Chocolate) 24g Protein | 0g Sugar | Whey Protein Concentrate | 53 Servings.</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro17.jpeg?raw=true" alt="Protein Product 3">
+        <h3> PERFORMANCE WHEY </h3>
+        <p>Supports Immunity , Strength & Metabolism | 24 g protein supports muscle recovery | Chocolate milkshake flavour | 2kg & 4.4 lb.</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro18.jpeg?raw=true" alt="Protein Product 3">
+        <h3>IMPACT WHEY  </h3>
+        <p>Increase strength & improve body composition formula | For muscle support & recovery | 28 servings lean muscle | 25 g protein 6.6g BCAAs & 1kg .</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro19.jpeg?raw=true" alt="Protein Product 3">
+        <h3>CLEANEST WHEY </h3>
+        <p>The Whole Truth Whey Protein Isolate+Concentrate | Cold coffe 2 kg (4.4 lbs) | 24g Protein/Scoop | 6.6g BCAA | Clean, Light & Easy to Digest.</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro20.jpeg?raw=true" alt="Protein Product 3">
+        <h3>SUPERIOR WHEY </h3>
+        <p>Helps facilitate muscle recovery after hard training or sport | 56 serves & 31.2 g protein | 2.7g carbs & 2.9 g fat | caramel popcorn flavour ./p>
+        <div class="price">₹2,100</div>
+        
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro21.jpeg?raw=true" alt="Protein Product 3">
+        <h3>AVVATAR ISORICH </h3>
+        <p> Health suppplement | malai kulfi flavor | serving 57 & protein 29 g | BCAA 6.5 g & 2 kg. | Glutamic acid 4.1 g .</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro22.jpeg?raw=true" alt="Protein Product 3">
+        <h3>AVVATAR WHEY </h3>
+        <p> Support, Muscle Growth & Health suppplement | malai kulfi flavor | serving 57 & protein 28 g | BCAA 8.2 g & 2 kg. | Glutamic acid 3.8 g .</p>
+        <div class="price">₹2,100</div>
+       
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro23.jpeg?raw=true" alt="Protein Product 3">
+        <h3>GNC PRO WHEY </h3>
+        <p>Supports healthy metabolism & lean muscle recovery | 51 servings & 24 g protein | whey protein concentrate & isolated poweder with 0.</p>
+        <div class="price">₹2,100</div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro24.jpeg?raw=true" alt="Protein Product 3">
+        <h3>CLEANEST WHEY </h3>
+        <p>The Whole Truth Whey Protein Isolate+Concentrate & 2 SETS | Light Cocoa 2 kg (4.4 lbs) | 24g Protein/Scoop | 6.6g BCAA | Clean, Light & Easy to Digest.</p>
+        <div class="price">₹2,100</div>
+    
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro25.jpeg?raw=true" alt="Protein Product 3">
+        <h3>CLEANEST RAW WHEY </h3>
+        <p>The Whole Truth Whey Protein Isolate | Unflavoured  | 30g Protein/Scoop | 7.5g BCAA | Clean, Light & Easy to Digest.</p>
+        <div class="price">₹2,100</div>
+
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro26.jpeg?raw=true" alt="Protein Product 3">
+        <h3>ISOZORB WHEY</h3>
+        <p>Supports Muscle Recovery + Endurance | 30g Pure Hydrolyzed Whey Isolate | 6.62g BCAAs + 5.26g Glutamic Acid | Delicious Rich Chocolate Flavor.</p>
+        <div class="price">₹2,100</div>
+      
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro27.jpeg?raw=true" alt="Protein Product 3">
+        <h3>GAFFIT VINTAGE WHEY </h3>
+        <p> Supports Muscle Recovery Strength & Growth  |  1 kg & 29 g servings | 26 g protein & 6.26 g BCAAs + double rich Chocolate | Whey Protein Concentrate + Isolate. </p>
+        <div class="price">₹2,100</div>
+      
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro28.jpeg?raw=true" alt="Protein Product 3">
+        <h3>SCITRON ADVANCE WHEY </h3>
+        <p>Enha        nce muscle recovery and reduce soreness | 1 KG & 28.5 servings & 25.5 g protein | 5.5 g BCAAs + PAAN milk | Whey Protein Concentrate + Isolate.</p>
+        <div class="price">₹2,100</div>
+      
+      </div>
+
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro29.jpeg?raw=true" alt="Protein Product 3">
+        <h3>HIGH PROTEIN MUESLI</h3>
+        <p>1kg, Dark Chocolate & Cranberry | 22g Protein | With Raisins, Almonds & Super Seeds,High Protein Breakfast Cereals.</p>
+        <div class="price">₹629</div>
+    
+      </div>           
+      <!-- Repeat for 30 products -->
+      <!-- You can copy-paste above div and just change random=?, name, and price -->
+      <!-- For example random=4 to random=30 -->
+      <!-- Example: -->
+      <div class="product-card">
+        <img src="https://github.com/shubhamurane/FITMORE/blob/main/pro30.jpeg?raw=true" alt="Protein Product 30">
+        <h3>HIGH PROTEIN OATS</h3>
+        <p> 1kg, Dark Chocolate | 22g Protein | With Raisins & Super Seeds, High Protein Breakfast Cereals Including rolled oats.</p>
+        <div class="price">₹446</div>
+        
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Fitmore</h2>
+    <p>Fitmore is a global leader in nutrition and fitness. We combine science and purity to deliver the highest-quality protein supplements that enhance your body’s natural potential.</p><br><br>
+    <h2 style="font-size: 15px;">LOCATION 📍</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.8100659597635!2d74.46387617375213!3d16.686385322623696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc0e376e96905a3%3A0x9edb54f42d8175be!2sFitmore%20The%20Suppliment%20Hub!5e0!3m2!1sen!2sin!4v1760937858791!5m2!1sen!2sin" width="600" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border: 2px; color: black;"></iframe>
+
+  </section>
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <input type="number" placeholder="your mobile no." required />
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit" class="submit">Send Message</button>
+    </form>
+  </section>
+
+   <section id="reviews">
+    <h2>Customer Reviews</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <h3>Shubham Urane </h3>
+        <div class="stars">★★★★★</div>
+        <p>Excellent protein quality and great taste! Really helps with muscle recovery after workouts.</p>
+      </div>
+      <div class="review-card">
+        <h3>Prashil Kavtekar </h3>
+        <div class="stars">★★★★☆</div>
+        <p>Good product and quick delivery. Packaging was also neat and professional.</p>
+      </div>
+      <div class="review-card">
+        <h3>Vyanktesh Madhyapghol </h3>
+        <div class="stars">★★★★★</div>
+        <p>Best protein supplement brand I’ve used so far. Highly recommend Fitmore for fitness enthusiasts!</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- (Your other sections and products remain unchanged) -->
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Fitmore</h3>
+        <p>Top-tier protein and supplement brand for fitness lovers worldwide.</p> <br>
+        <p>Owner : Mr.Rushi Awate </p>
+        <p>Email : codewebverse@gmail.com </p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          
+          <i class="fab fa-facebook"></i>
+        </div>
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Fitmore. All Rights Reserved.
+      
+    </div> <br>
+    <p style="padding-left: 1000px; font-size: 10px;"> CREATED BY_ <p style="font-family: cursive; padding-left: 1000px; font-size: 11px; color: grey;"> Webverse Team </p></p>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      menuToggle.textContent = menuToggle.textContent === '☰' ? '✖' : '☰';
+      menuToggle.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
